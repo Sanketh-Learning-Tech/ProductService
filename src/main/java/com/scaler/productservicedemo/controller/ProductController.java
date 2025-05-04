@@ -1,5 +1,6 @@
 package com.scaler.productservicedemo.controller;
 
+import com.scaler.productservicedemo.exceptions.ProductNotFoundException;
 import com.scaler.productservicedemo.model.Product;
 import com.scaler.productservicedemo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") long id){
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") long id) throws ProductNotFoundException {
 
         return new ResponseEntity<>(productService.getSingleProduct(id), HttpStatus.OK);
     }
@@ -39,7 +40,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<Product> replaceProduct(@PathVariable("id") long id,
                                                   @RequestBody Product product){
-        return new ResponseEntity<>(productService.updateProduct(id, product), HttpStatus.OK);
+        return new ResponseEntity<>(productService.replaceProduct(id, product), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
