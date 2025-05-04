@@ -1,26 +1,20 @@
 package com.scaler.productservicedemo.service;
 
 import com.scaler.productservicedemo.dto.FakeStoreProductDto;
-import com.scaler.productservicedemo.model.Category;
+import com.scaler.productservicedemo.exceptions.ProductNotFoundException;
 import com.scaler.productservicedemo.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import static java.util.Objects.nonNull;
-
 @Service
-public class FakeStoreProductService implements ProductService{
+public class FakeStoreProductService implements ProductService {
 
     RestTemplate restTemplate;
 
@@ -30,9 +24,13 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product getSingleProduct(long id) {
-        FakeStoreProductDto fakeStoreProductDto= restTemplate
-                .getForObject("https://fakestoreapi.com/products/"+id, FakeStoreProductDto.class);
+    public Product getSingleProduct(long id) throws ProductNotFoundException {
+        FakeStoreProductDto fakeStoreProductDto = restTemplate
+                .getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+
+        if (fakeStoreProductDto == null) {
+            throw new ProductNotFoundException("The product with id: " + id + " does not exist.");
+        }
 
         return fakeStoreProductDto.toProduct();
     }
@@ -72,16 +70,16 @@ public class FakeStoreProductService implements ProductService{
             products.add(fakeStoreProductDto.toProduct());
         }
 
-       return products;
+        return products;
 
     }
 
     @Override
     public Product updateProduct(long id, Product product) {
-       FakeStoreProductDto fakeStoreProductDto = restTemplate.patchForObject("https://fakestoreapi.com/products/"+id,
+        FakeStoreProductDto fakeStoreProductDto = restTemplate.patchForObject("https://fakestoreapi.com/products/" + id,
                 product.fromProduct(), FakeStoreProductDto.class);
 
-       return fakeStoreProductDto.toProduct();
+        return fakeStoreProductDto.toProduct();
     }
 
     @Override
@@ -90,11 +88,11 @@ public class FakeStoreProductService implements ProductService{
         RequestCallback requestCallback = restTemplate.httpEntityCallback(product.fromProduct(), FakeStoreProductDto.class);
         HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor = new HttpMessageConverterExtractor(FakeStoreProductDto.class,
                 restTemplate.getMessageConverters());
-        return restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.POST, requestCallback, responseExtractor).toProduct();
+        return restTemplate.execute("https://fakestoreapi.com/products/" + id, HttpMethod.POST, requestCallback, responseExtractor).toProduct();
     }
 
     @Override
     public void deleteProduct(long id) {
-        restTemplate.delete("https://fakestoreapi.com/products/"+id);
+        restTemplate.delete("https://fakestoreapi.com/products/" + id);
     }
 }
