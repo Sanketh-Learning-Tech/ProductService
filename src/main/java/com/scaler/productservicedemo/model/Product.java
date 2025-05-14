@@ -1,24 +1,21 @@
 package com.scaler.productservicedemo.model;
 
 import com.scaler.productservicedemo.dto.FakeStoreProductDto;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Entity
-public class Product {
-    @Id
-    private long id;
+public class Product extends BaseModel {
+
     private String title;
-    private double price;
+    private Double price;
     private String description;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Category category;
     private String imageUrl;
 
