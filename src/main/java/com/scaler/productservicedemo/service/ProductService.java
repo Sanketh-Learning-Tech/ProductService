@@ -17,4 +17,6 @@ public interface ProductService {
     void deleteProduct(long id);
 
     Product addNewProduct(Product product);
+
+    Product getProductByName(String name);
 }

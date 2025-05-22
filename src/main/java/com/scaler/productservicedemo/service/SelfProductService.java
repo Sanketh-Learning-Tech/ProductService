@@ -89,6 +89,15 @@ public class SelfProductService implements ProductService{
         return getProduct(product);
     }
 
+    @Override
+    public void deleteProduct(long id) {
+
+    }
+
+    public Product getProductByName(String name) {
+        return productRepository.findByName(name);
+    }
+
     private Product getProduct(Product product) {
         Optional<Category> category = categoryRepository.findByName(product.getCategory().getName());
         if(category.isPresent()) {
@@ -101,8 +110,4 @@ public class SelfProductService implements ProductService{
         return productRepository.save(product);
     }
 
-    @Override
-    public void deleteProduct(long id) {
-
-    }
 }

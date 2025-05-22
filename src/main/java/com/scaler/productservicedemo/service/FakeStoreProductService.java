@@ -100,4 +100,9 @@ public class FakeStoreProductService implements ProductService {
     public Product addNewProduct(Product product) {
         return null;
     }
+
+    @Override
+    public Product getProductByName(String name) {
+        return null;
+    }
 }

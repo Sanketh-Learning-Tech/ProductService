@@ -15,9 +15,10 @@ public class Product extends BaseModel {
     private String title;
     private Double price;
     private String description;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Category category;
     private String imageUrl;
+    private int numOfSales;
 
     public FakeStoreProductDto fromProduct() {
         FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
