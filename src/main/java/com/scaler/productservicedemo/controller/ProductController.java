@@ -2,6 +2,7 @@ package com.scaler.productservicedemo.controller;
 
 import com.scaler.productservicedemo.exceptions.ProductNotFoundException;
 import com.scaler.productservicedemo.model.Product;
+import com.scaler.productservicedemo.model.projections.ProductWithTitleAndId;
 import com.scaler.productservicedemo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,8 +30,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(){
-        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
+    public ResponseEntity<List<ProductWithTitleAndId>> getAllProducts(){
+        return new ResponseEntity<>(productService.getProductNameAndId(), HttpStatus.OK);
     }
 
    /* @PostMapping

@@ -3,6 +3,7 @@ package com.scaler.productservicedemo.service;
 import com.scaler.productservicedemo.exceptions.ProductNotFoundException;
 import com.scaler.productservicedemo.model.Category;
 import com.scaler.productservicedemo.model.Product;
+import com.scaler.productservicedemo.model.projections.ProductWithTitleAndId;
 import com.scaler.productservicedemo.repositories.CategoryRepository;
 import com.scaler.productservicedemo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +109,10 @@ public class SelfProductService implements ProductService{
         }
 
         return productRepository.save(product);
+    }
+
+    public List<ProductWithTitleAndId> getProductNameAndId() {
+        return productRepository.getProductNameAndId();
     }
 
 }

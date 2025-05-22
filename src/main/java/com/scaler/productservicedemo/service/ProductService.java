@@ -2,6 +2,7 @@ package com.scaler.productservicedemo.service;
 
 import com.scaler.productservicedemo.exceptions.ProductNotFoundException;
 import com.scaler.productservicedemo.model.Product;
+import com.scaler.productservicedemo.model.projections.ProductWithTitleAndId;
 
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface ProductService {
     Product addNewProduct(Product product);
 
     Product getProductByName(String name);
+
+    List<ProductWithTitleAndId> getProductNameAndId();
+
 }

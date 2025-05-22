@@ -3,6 +3,7 @@ package com.scaler.productservicedemo.service;
 import com.scaler.productservicedemo.dto.FakeStoreProductDto;
 import com.scaler.productservicedemo.exceptions.ProductNotFoundException;
 import com.scaler.productservicedemo.model.Product;
+import com.scaler.productservicedemo.model.projections.ProductWithTitleAndId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -104,5 +105,10 @@ public class FakeStoreProductService implements ProductService {
     @Override
     public Product getProductByName(String name) {
         return null;
+    }
+
+    @Override
+    public List<ProductWithTitleAndId> getProductNameAndId() {
+        return List.of();
     }
 }
